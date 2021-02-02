@@ -4,46 +4,54 @@ const inf = document.querySelector("input[type=text]");
 // tab avec l'op courante ; 
 let operCourr = []; 
 
+let calculf=false; // le calcul est terminer ? 
+
+
 // les operateurs ;;; 
 
 let opers = ['+','-','x','/'];
 
 function calcul(nb1, nb2, op){
-    console.log('cal');
-
+    let result; 
     opers.forEach(e => {
         if(e == op){
-            console.log('e et op '); 
-            
+            nb1 = parseInt(nb1); 
+            nb2 = parseInt(nb2); 
             switch(op){
                 case "+":
-                    return nb1+nb2;
+                    result = nb1+nb2;
+                break;
                 case "-":
-                    return nb1-nb2;  
+                    result = nb1-nb2;  
+                break;
                 case "x":
-                    return nb1*nb2; 
+                    result =  nb1*nb2; 
+                break;
                 case "/":
-                    return nb1/nb2;
+                    result =  nb1/nb2;
+                break;
             }
         }
     });
+    return result;
 }
 
 
 btn.forEach((e) =>{
 
-    e.addEventListener("click", () =>{
+    e.addEventListener("click", () => {
+        if(calculf){
+            inf.value="";
+            calculf=false;
+        }
         const action = e.innerHTML; // si nombre ou + - / etc .. 
-
         if(isNaN(action)){
-            console.log('operation'); 
-            
             switch(action){
                 case  "C": 
                     operCourr = []; 
                     inf.value=""; 
                 break;
-                case "x":
+                case "X":
                     if(inf.value.length > 0 && operCourr.length > 0){
                         inf.value=inf.value.slice(0, 1);
                         operCourr.pop();  
@@ -55,9 +63,9 @@ btn.forEach((e) =>{
                         opers.forEach(op =>{ 
                             if(operCourr.includes(op)){
                                 let toSplit = operCourr.join('').split(op); 
-                                inf.value=calcul(toSplit[0],toSplit[1],op);
-                                console.log(`${toSplit[0]} et ${toSplit[1]} => Op: ${op} `);
-                                
+                                inf.value = calcul(toSplit[0],toSplit[1],op);
+                                operCourr = [];
+                                calculf=true; 
                             }
                         })
                     }
@@ -71,11 +79,5 @@ btn.forEach((e) =>{
             operCourr.push(action);
             inf.value+=action;
         }
-        
-        console.log(operCourr); 
-
-
-    })
-
-
+    });
 });
