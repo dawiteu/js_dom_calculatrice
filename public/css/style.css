@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+*::selection{
+    color:red;
+    background:none;
+}
+
 body{
     font-family: sans-serif; 
 }
