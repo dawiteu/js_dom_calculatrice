@@ -86,7 +86,7 @@ div#calc>div#nombres>div.row>div.col>button.op{
     color:orange; 
     font-weight: 900;
 }
-div#calc>div#nombres>div.row:last-child>div.col:last-child>button.op:last-of-type{
+div#calc>div#nombres>div.row:nth-child(5)>div.col:last-child>button.op:last-of-type{
     color:white;   
     background-color: orange;
     /* border-radius:50%; */

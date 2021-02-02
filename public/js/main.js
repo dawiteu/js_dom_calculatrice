@@ -15,10 +15,6 @@ let dejaunop = false; // est ce qu'ila d eja pris un operateur ?
 btn.forEach((e) =>{
 
     e.addEventListener("click", () => {
-        if(calculf){
-            inf.value="";
-            calculf=false;
-        }
         const action = e.innerHTML; // si nombre ou + - / etc .. 
         if(isNaN(action)){
             switch(action){
@@ -39,14 +35,23 @@ btn.forEach((e) =>{
                             opers.forEach(op =>{ 
                                 if(operCourr.includes(op)){
                                     let toSplit = operCourr.join('').split(op); 
-                                    inf.value = calcul(toSplit[0],toSplit[1],op);
+                                    //console.log(toSplit);
+                                    let resultat = calcul(toSplit[0],toSplit[1],op);
+                                    inf.value = resultat;
                                     operCourr = [];
+                                    let stringResult = resultat.toString(); 
+                                    stringResult = stringResult.split('');
+                                    stringResult.forEach(e => operCourr.push(e) );
                                     calculf=true; 
                                     dejaunop=false;
                                 }
                             })                        
                         }
                     }
+                break;
+                case ".":
+                    operCourr.push(action);
+                    inf.value+=action;   
                 break;
                 default:
                     if(operCourr.length > 0){
@@ -70,4 +75,7 @@ btn.forEach((e) =>{
 
 //const chc = document.querySelector("span#switchcol"); 
 
+
+
+// change le theme de la calculette : soit noir soir clair ; 
 chc.addEventListener("click", dark);
