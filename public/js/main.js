@@ -1,43 +1,15 @@
+import {calcul,opers} from "./class/calcul.js";
+import {dark} from "./class/bonus.js"; 
+
 const btn = document.querySelectorAll("button"); 
 const inf = document.querySelector("input[type=text]"); 
 const chc = document.querySelector("span#switchcol"); 
-
-let dark = false; // default est clair ; 
 
 // tab avec l'op courante ; 
 let operCourr = []; 
 
 let calculf=false; // le calcul est terminer ? 
-
-// les operateurs ;;; 
-
-let opers = ['+','-','x','/'];
-
-function calcul(nb1, nb2, op){
-    let result; 
-    opers.forEach(e => {
-        if(e == op){
-            nb1 = parseFloat(nb1); 
-            nb2 = parseFloat(nb2); 
-            switch(op){
-                case "+":
-                    result = nb1+nb2;
-                break;
-                case "-":
-                    result = nb1-nb2;  
-                break;
-                case "x":
-                    result =  nb1*nb2; 
-                break;
-                case "/":
-                    result =  nb1/nb2;
-                break;
-                
-            }
-        }
-    });
-    return result;
-}
+let dejaunop = false; // est ce qu'ila d eja pris un operateur ? 
 
 
 btn.forEach((e) =>{
@@ -70,14 +42,22 @@ btn.forEach((e) =>{
                                     inf.value = calcul(toSplit[0],toSplit[1],op);
                                     operCourr = [];
                                     calculf=true; 
+                                    dejaunop=false;
                                 }
                             })                        
                         }
                     }
                 break;
                 default:
-                    operCourr.push(action);
-                    inf.value+=action;
+                    if(operCourr.length > 0){
+                        if(!dejaunop){ // on verifie s'il a deja pas d'operateur 
+                            operCourr.push(action);
+                            inf.value+=action;        
+                            dejaunop=true;                
+                        }
+                    }else{
+                        // c'est le premier, donc non. uniquement chifre pour premiere valeur du tableau d'operation.. 
+                    }
                 break;
             }
         }else{ //c'est un chifffre 
@@ -88,13 +68,6 @@ btn.forEach((e) =>{
     });
 });
 
+//const chc = document.querySelector("span#switchcol"); 
 
-chc.addEventListener("click", () => {
-    if(!dark){
-        document.body.style.backgroundColor="black"; 
-        dark = true;
-    }else{
-        document.body.style.backgroundColor="#ccc";  
-        dark=false; 
-    }
-});
+chc.addEventListener("click", dark);
