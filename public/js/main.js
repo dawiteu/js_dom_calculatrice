@@ -1,3 +1,5 @@
+"use strict";
+
 import {calcul,opers} from "./class/calcul.js";
 import {dark} from "./class/bonus.js"; 
 
@@ -9,18 +11,24 @@ const chc = document.querySelector("span#switchcol");
 let operCourr = []; 
 
 let calculf=false; // le calcul est terminer ? 
-let dejaunop = false; // est ce qu'ila d eja pris un operateur ? 
+let dejaunop = false; // est ce qu'ila d eja pris un operateur ?
 
+
+
+let firstcalc = true; //s'il est au premier calcul ; 
+
+firstcalc ? inf.value="0" : "" ; 
 
 btn.forEach((e) =>{
 
     e.addEventListener("click", () => {
+        firstcalc=false;
         const action = e.innerHTML; // si nombre ou + - / etc .. 
         if(isNaN(action)){
             switch(action){
                 case  "C": 
                     operCourr = []; 
-                    inf.value=""; 
+                    inf.value="0"; 
                 break;
                 case "X":
                     if(inf.value.length > 0 && operCourr.length > 0){
@@ -66,8 +74,15 @@ btn.forEach((e) =>{
                 break;
             }
         }else{ //c'est un chifffre 
-            operCourr.push(action);
-            inf.value+=action;
+            if(inf.value.charAt(0) == "0"){
+                inf.value=inf.value.substring(1);
+                console.log('le');
+                operCourr.push(action);
+                inf.value+=action;
+            }else{
+                operCourr.push(action);
+                inf.value+=action;
+            }
         }
         console.log(operCourr); 
     });
